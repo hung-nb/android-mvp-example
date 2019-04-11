@@ -4,7 +4,7 @@ import com.example.kotlin_mvp_login.login.view.ILoginView
 
 class LoginPresenterCompl(var iLoginView: ILoginView) : ILoginPresenter {
     override fun doLogin(username: String, password: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        iLoginView.onLoginResult(true)
     }
 
     override fun setProgressBarVisibility(visibility: Int) {
