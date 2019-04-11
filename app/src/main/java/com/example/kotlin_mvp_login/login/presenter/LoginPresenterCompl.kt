@@ -39,6 +39,6 @@ class LoginPresenterCompl(var iLoginView: ILoginView) : ILoginPresenter {
     }
 
     override fun setProgressBarVisibility(visibility: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        iLoginView.onSetProgressBarVisibility(visibility)
     }
 }

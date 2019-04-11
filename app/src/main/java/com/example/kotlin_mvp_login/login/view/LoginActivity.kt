@@ -19,6 +19,9 @@ class LoginActivity : AppCompatActivity(), ILoginView, View.OnClickListener {
     }
 
     override fun onLoginResult(result: Boolean?) {
+
+        loginPresenter.setProgressBarVisibility(View.GONE)
+
         if (result == true) {
             val intent = Intent(this, ListActivity::class.java)
             startActivity(intent)
@@ -26,12 +29,15 @@ class LoginActivity : AppCompatActivity(), ILoginView, View.OnClickListener {
     }
 
     override fun onSetProgressBarVisibility(visibility: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        loginSpinner.visibility = visibility
     }
 
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.btnLogin -> {
+
+                loginPresenter?.setProgressBarVisibility(View.VISIBLE)
+
                 loginPresenter?.doLogin(
                     txtUsername.text.toString(),
                     txtPassword.text.toString()
