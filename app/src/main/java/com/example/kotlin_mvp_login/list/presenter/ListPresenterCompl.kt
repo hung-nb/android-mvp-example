@@ -1,12 +1,21 @@
 package com.example.kotlin_mvp_login.list.presenter
 
-class ListPresenterCompl : IListPresenter {
+import com.example.kotlin_mvp_login.list.model.ItemObject
+import com.example.kotlin_mvp_login.list.view.IListView
+
+class ListPresenterCompl(val iListView : IListView) : IListPresenter {
 
     override fun fetchListData() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val testItem1 = ItemObject("Number One", "This is test item number one")
+        val testItem2 = ItemObject("Number Two", "This is test item number two")
+        val testList = listOf(
+            testItem1,
+            testItem2
+        )
+        iListView.onListResult(testList)
     }
 
     override fun setProgressBarVisiblity(visiblity: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        iListView.onSetProgressBarVisibility(visiblity)
     }
 }
