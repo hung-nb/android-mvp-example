@@ -4,6 +4,7 @@
 
 ## Features
  - Source structure: Kotlin - "Model - View - Presenter"
+ - Splash screen: Use "android:theme" and "Handler().postDelayed()"
  - Responsive UI layout: "ConstraintLayout"
  - Network communication: "okhttp"
  - List view: "RecyclerView"
