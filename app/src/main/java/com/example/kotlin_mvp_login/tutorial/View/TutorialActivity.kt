@@ -1,4 +1,4 @@
-package com.example.kotlin_mvp_login.tutorial
+package com.example.kotlin_mvp_login.tutorial.View
 
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
@@ -7,20 +7,16 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.example.kotlin_mvp_login.R
 
 import kotlinx.android.synthetic.main.activity_tutorial.*
-import kotlinx.android.synthetic.main.fragment_tutorial.view.*
 import android.support.v4.view.ViewPager.OnPageChangeListener
+import com.example.kotlin_mvp_login.tutorial.Presenter.TutorialPresenterImpl
 
-
-
-class TutorialActivity : AppCompatActivity() {
+class TutorialActivity : AppCompatActivity(), ITutorialView {
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
+    private val tutorialPresenter = TutorialPresenterImpl(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,26 +30,10 @@ class TutorialActivity : AppCompatActivity() {
         container.adapter = mSectionsPagerAdapter
         container.addOnPageChangeListener(object : OnPageChangeListener {
 
-            val viewBtn1 = this@TutorialActivity?.tutorialBtn1
-            val viewBtn2 = this@TutorialActivity?.tutorialBtn2
-            val viewBtn3 = this@TutorialActivity?.tutorialBtn3
-
             // This method will be invoked when a new page becomes selected.
             override fun onPageSelected(position: Int) {
                 // Update dot color
-                if (position === 0) {
-                    viewBtn1?.setColorFilter(Color.parseColor("#0099CC"))
-                    viewBtn2?.setColorFilter(Color.parseColor("#aaaaaa"))
-                    viewBtn3?.setColorFilter(Color.parseColor("#aaaaaa"))
-                } else if (position === 1) {
-                    viewBtn1?.setColorFilter(Color.parseColor("#aaaaaa"))
-                    viewBtn2?.setColorFilter(Color.parseColor("#0099CC"))
-                    viewBtn3?.setColorFilter(Color.parseColor("#aaaaaa"))
-                } else if (position === 2) {
-                    viewBtn1?.setColorFilter(Color.parseColor("#aaaaaa"))
-                    viewBtn2?.setColorFilter(Color.parseColor("#aaaaaa"))
-                    viewBtn3?.setColorFilter(Color.parseColor("#0099CC"))
-                }
+                tutorialPresenter.setActiveIndicator(position)
             }
 
             // This method will be invoked when the current page is scrolled
@@ -85,29 +65,22 @@ class TutorialActivity : AppCompatActivity() {
         }
     }
 
-    class PlaceholderFragment : Fragment() {
-
-        override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ): View? {
-            val rootView = inflater.inflate(R.layout.fragment_tutorial, container, false)
-            rootView.section_label.text = getString(
-                R.string.section_format, arguments?.getInt(
-                    ARG_SECTION_NUMBER
-                ))
-            return rootView
-        }
-
-        companion object {
-            private val ARG_SECTION_NUMBER = "section_number"
-
-            fun newInstance(sectionNumber: Int): PlaceholderFragment {
-                val fragment = PlaceholderFragment()
-                val args = Bundle()
-                args.putInt(ARG_SECTION_NUMBER, sectionNumber)
-                fragment.arguments = args
-                return fragment
+    override fun onSetActiveIndication(position: Int) {
+        when (position) {
+            0 -> {
+                tutorialBtn1?.setColorFilter(Color.parseColor("#0099CC"))
+                tutorialBtn2?.setColorFilter(Color.parseColor("#aaaaaa"))
+                tutorialBtn3?.setColorFilter(Color.parseColor("#aaaaaa"))
+            }
+            1 -> {
+                tutorialBtn1?.setColorFilter(Color.parseColor("#aaaaaa"))
+                tutorialBtn2?.setColorFilter(Color.parseColor("#0099CC"))
+                tutorialBtn3?.setColorFilter(Color.parseColor("#aaaaaa"))
+            }
+            2 -> {
+                tutorialBtn1?.setColorFilter(Color.parseColor("#aaaaaa"))
+                tutorialBtn2?.setColorFilter(Color.parseColor("#aaaaaa"))
+                tutorialBtn3?.setColorFilter(Color.parseColor("#0099CC"))
             }
         }
     }

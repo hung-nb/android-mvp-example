@@ -12,7 +12,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".tutorial.TutorialActivity"
+                android:name=".tutorial.View.TutorialActivity"
                 android:label="@string/title_activity_tutorial"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
