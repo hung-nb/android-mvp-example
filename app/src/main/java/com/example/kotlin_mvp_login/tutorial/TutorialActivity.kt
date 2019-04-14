@@ -1,5 +1,6 @@
 package com.example.kotlin_mvp_login.tutorial
 
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 
 import android.support.v4.app.Fragment
@@ -13,17 +14,12 @@ import com.example.kotlin_mvp_login.R
 
 import kotlinx.android.synthetic.main.activity_tutorial.*
 import kotlinx.android.synthetic.main.fragment_tutorial.view.*
+import android.support.v4.view.ViewPager.OnPageChangeListener
+
+
 
 class TutorialActivity : AppCompatActivity() {
 
-    /**
-     * The [android.support.v4.view.PagerAdapter] that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * [android.support.v4.app.FragmentStatePagerAdapter].
-     */
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,12 +32,43 @@ class TutorialActivity : AppCompatActivity() {
 
         // Set up the ViewPager with the sections adapter.
         container.adapter = mSectionsPagerAdapter
+        container.addOnPageChangeListener(object : OnPageChangeListener {
+
+            val viewBtn1 = this@TutorialActivity?.tutorialBtn1
+            val viewBtn2 = this@TutorialActivity?.tutorialBtn2
+            val viewBtn3 = this@TutorialActivity?.tutorialBtn3
+
+            // This method will be invoked when a new page becomes selected.
+            override fun onPageSelected(position: Int) {
+                // Update dot color
+                if (position === 0) {
+                    viewBtn1?.setColorFilter(Color.parseColor("#0099CC"))
+                    viewBtn2?.setColorFilter(Color.parseColor("#aaaaaa"))
+                    viewBtn3?.setColorFilter(Color.parseColor("#aaaaaa"))
+                } else if (position === 1) {
+                    viewBtn1?.setColorFilter(Color.parseColor("#aaaaaa"))
+                    viewBtn2?.setColorFilter(Color.parseColor("#0099CC"))
+                    viewBtn3?.setColorFilter(Color.parseColor("#aaaaaa"))
+                } else if (position === 2) {
+                    viewBtn1?.setColorFilter(Color.parseColor("#aaaaaa"))
+                    viewBtn2?.setColorFilter(Color.parseColor("#aaaaaa"))
+                    viewBtn3?.setColorFilter(Color.parseColor("#0099CC"))
+                }
+            }
+
+            // This method will be invoked when the current page is scrolled
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                // Code goes here
+            }
+
+            // Called when the scroll state changes:
+            // SCROLL_STATE_IDLE, SCROLL_STATE_DRAGGING, SCROLL_STATE_SETTLING
+            override fun onPageScrollStateChanged(state: Int) {
+                // Code goes here
+            }
+        })
     }
 
-    /**
-     * A [FragmentPagerAdapter] that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment {
@@ -58,9 +85,6 @@ class TutorialActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
     class PlaceholderFragment : Fragment() {
 
         override fun onCreateView(
@@ -76,16 +100,8 @@ class TutorialActivity : AppCompatActivity() {
         }
 
         companion object {
-            /**
-             * The fragment argument representing the section number for this
-             * fragment.
-             */
             private val ARG_SECTION_NUMBER = "section_number"
 
-            /**
-             * Returns a new instance of this fragment for the given section
-             * number.
-             */
             fun newInstance(sectionNumber: Int): PlaceholderFragment {
                 val fragment = PlaceholderFragment()
                 val args = Bundle()

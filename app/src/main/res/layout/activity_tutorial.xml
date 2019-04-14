@@ -13,4 +13,34 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
+    <LinearLayout
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="50dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp">
+        <ImageButton
+            android:src="@android:drawable/presence_invisible"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tutorialBtn1"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:tint="@android:color/holo_blue_dark"/>
+        <ImageButton
+                android:src="@android:drawable/presence_invisible"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tutorialBtn2"
+                android:layout_weight="1"
+                android:background="@android:color/transparent" android:tint="@android:color/darker_gray"/>
+        <ImageButton
+                android:src="@android:drawable/presence_invisible"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tutorialBtn3"
+                android:layout_weight="1"
+                android:background="@android:color/transparent" android:tint="@android:color/darker_gray"/>
+    </LinearLayout>
+
 </android.support.design.widget.CoordinatorLayout>
