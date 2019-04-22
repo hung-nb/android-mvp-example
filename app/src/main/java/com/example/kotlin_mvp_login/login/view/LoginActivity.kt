@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import com.example.kotlin_mvp_login.R
-import com.example.kotlin_mvp_login.list.view.ListActivity
 import com.example.kotlin_mvp_login.login.presenter.LoginPresenterCompl
+import com.example.kotlin_mvp_login.tutorial.View.TutorialActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), ILoginView, View.OnClickListener {
@@ -27,7 +27,8 @@ class LoginActivity : AppCompatActivity(), ILoginView, View.OnClickListener {
         }
 
         if (result == true) {
-            val intent = Intent(this, ListActivity::class.java)
+            // Tutorial screen
+            val intent = Intent(this, TutorialActivity::class.java)
             startActivity(intent)
         }
     }

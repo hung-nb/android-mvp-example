@@ -1,5 +1,6 @@
 package com.example.kotlin_mvp_login.tutorial.View
 
+import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 
@@ -11,16 +12,19 @@ import com.example.kotlin_mvp_login.R
 
 import kotlinx.android.synthetic.main.activity_tutorial.*
 import android.support.v4.view.ViewPager.OnPageChangeListener
+import com.example.kotlin_mvp_login.list.view.ListActivity
 import com.example.kotlin_mvp_login.tutorial.Presenter.TutorialPresenterImpl
 
 class TutorialActivity : AppCompatActivity(), ITutorialView {
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private val tutorialPresenter = TutorialPresenterImpl(this)
+    private val totalPage = 3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tutorial)
+        val context = this
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -29,6 +33,8 @@ class TutorialActivity : AppCompatActivity(), ITutorialView {
         // Set up the ViewPager with the sections adapter.
         container.adapter = mSectionsPagerAdapter
         container.addOnPageChangeListener(object : OnPageChangeListener {
+
+            var position = 0
 
             // This method will be invoked when a new page becomes selected.
             override fun onPageSelected(position: Int) {
@@ -39,12 +45,18 @@ class TutorialActivity : AppCompatActivity(), ITutorialView {
             // This method will be invoked when the current page is scrolled
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 // Code goes here
+                this.position = position
             }
 
             // Called when the scroll state changes:
             // SCROLL_STATE_IDLE, SCROLL_STATE_DRAGGING, SCROLL_STATE_SETTLING
             override fun onPageScrollStateChanged(state: Int) {
-                // Code goes here
+
+                if (this.position == totalPage - 1 && state == 1) {
+                    // List screen
+                    val intent = Intent(context, ListActivity::class.java)
+                    startActivity(intent)
+                }
             }
         })
     }
@@ -61,7 +73,7 @@ class TutorialActivity : AppCompatActivity(), ITutorialView {
 
         override fun getCount(): Int {
             // Show 3 total pages.
-            return 3
+            return totalPage
         }
     }
 
