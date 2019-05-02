@@ -12,14 +12,15 @@ import com.example.kotlin_mvp_login.R
 
 import kotlinx.android.synthetic.main.activity_tutorial.*
 import android.support.v4.view.ViewPager.OnPageChangeListener
+import com.example.kotlin_mvp_login.common.Constants
 import com.example.kotlin_mvp_login.list.view.ListActivity
+import com.example.kotlin_mvp_login.tutorial.Model.TutorialSlide
 import com.example.kotlin_mvp_login.tutorial.Presenter.TutorialPresenterImpl
 
 class TutorialActivity : AppCompatActivity(), ITutorialView {
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private val tutorialPresenter = TutorialPresenterImpl(this)
-    private val totalPage = 3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,12 +52,8 @@ class TutorialActivity : AppCompatActivity(), ITutorialView {
             // Called when the scroll state changes:
             // SCROLL_STATE_IDLE, SCROLL_STATE_DRAGGING, SCROLL_STATE_SETTLING
             override fun onPageScrollStateChanged(state: Int) {
-
-                if (this.position == totalPage - 1 && state == 1) {
-                    // List screen
-                    val intent = Intent(context, ListActivity::class.java)
-                    startActivity(intent)
-                }
+                val tutorialSlide = TutorialSlide(position, state)
+                tutorialPresenter.navigateToList(tutorialSlide)
             }
         })
     }
@@ -73,7 +70,7 @@ class TutorialActivity : AppCompatActivity(), ITutorialView {
 
         override fun getCount(): Int {
             // Show 3 total pages.
-            return totalPage
+            return Constants.totalTutorialSlides
         }
     }
 
@@ -95,5 +92,11 @@ class TutorialActivity : AppCompatActivity(), ITutorialView {
                 tutorialBtn3?.setColorFilter(Color.parseColor("#0099CC"))
             }
         }
+    }
+
+    override fun navigateToList() {
+        // List screen
+        val intent = Intent(this, ListActivity::class.java)
+        startActivity(intent)
     }
 }
