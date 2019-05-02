@@ -6,35 +6,25 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import com.example.kotlin_mvp_login.R
+import com.example.kotlin_mvp_login.common.network.LoginRequest
 import com.example.kotlin_mvp_login.login.presenter.LoginPresenterCompl
 import com.example.kotlin_mvp_login.tutorial.View.TutorialActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), ILoginView, View.OnClickListener {
 
-    private val loginPresenter = LoginPresenterCompl(this)
-    private val handler = Handler()
+    private val loginRequest = LoginRequest()
+    private val loginPresenter = LoginPresenterCompl(this, loginRequest)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
     }
 
-    override fun onLoginResult(result: Boolean?) {
-
-        handler.post {
-            loginPresenter.setProgressBarVisibility(View.GONE)
-        }
-
-        if (result == true) {
-            // Tutorial screen
-            val intent = Intent(this, TutorialActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
     override fun onSetProgressBarVisibility(visibility: Int) {
-        loginSpinner.visibility = visibility
+        runOnUiThread({
+            loginSpinner.visibility = visibility
+        })
     }
 
     override fun onClick(view: View?) {
@@ -51,5 +41,10 @@ class LoginActivity : AppCompatActivity(), ILoginView, View.OnClickListener {
             else -> {
             }
         }
+    }
+
+    override fun navigateToTutorialView() {
+        val intent = Intent(this, TutorialActivity::class.java)
+        startActivity(intent)
     }
 }

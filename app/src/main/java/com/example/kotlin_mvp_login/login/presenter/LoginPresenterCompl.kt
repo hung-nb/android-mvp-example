@@ -1,40 +1,22 @@
 package com.example.kotlin_mvp_login.login.presenter
 
-import com.example.kotlin_mvp_login.common.OkHttpRequest
+import android.view.View
 import com.example.kotlin_mvp_login.login.view.ILoginView
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.Response
-import java.io.IOException
+import com.example.kotlin_mvp_login.common.network.ILoginRequest
 
-class LoginPresenterCompl(var iLoginView: ILoginView) : ILoginPresenter {
+class LoginPresenterCompl(var iLoginView: ILoginView, var iLoginRequest: ILoginRequest) : ILoginPresenter {
 
     override fun doLogin(username: String, password: String) {
+        iLoginRequest.requestLogin(username, password) { complete ->
 
-        val request = OkHttpRequest()
-        val url = "http://www.google.com"   // TO DO:
-        val map: HashMap<String, String> = hashMapOf(
-            "username" to username,
-            "password" to password)
-        try {
-            request.post(
-                url,
-                map,
-                object: Callback {
-                    override fun onResponse(call: Call, response: Response) {
-                        // Login succeeded
-                        iLoginView.onLoginResult(true)  // TO DO:
-                    }
+            iLoginView.onSetProgressBarVisibility(View.GONE)
+            iLoginView.navigateToTutorialView()
 
-                    override fun onFailure(call: Call, e: IOException) {
-                        // Login failed
-                        iLoginView.onLoginResult(false)  // TO DO:
-                    }
-                }
-            )
-        } catch (e: IOException) {
-            e.printStackTrace()
-            iLoginView.onLoginResult(false)
+            if (complete) {
+                // Login succeeded
+            } else {
+                // Login failed
+            }
         }
     }
 
